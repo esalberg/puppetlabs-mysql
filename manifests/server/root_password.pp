@@ -23,7 +23,7 @@ class mysql::server::root_password {
     mysql_user { 'root@localhost':
       ensure        => present,
       password_hash => mysql_password($mysql::server::root_password),
-      require       => Exec['remove install pass']
+      require       => Exec['remove install pass'],
     }
   }
 
@@ -39,7 +39,8 @@ class mysql::server::root_password {
       File["${::root_home}/.my.cnf"] { show_diff => false }
     }
     if $mysql::server::create_root_user == true {
-      Mysql_user['root@localhost'] -> File["${::root_home}/.my.cnf"]
+#      Mysql_user['root@localhost'] -> File["${::root_home}/.my.cnf"]
+      File["${::root_home}/.my.cnf"] -> Mysql_user['root@localhost']
     }
   }
 
