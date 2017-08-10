@@ -1,19 +1,22 @@
 # Private class: See README.md.
 class mysql::params {
 
-  $manage_config_file     = true
-  $purge_conf_dir         = false
-  $restart                = false
-  $root_password          = 'UNSET'
-  $install_secret_file    = '/.mysql_secret'
-  $server_package_ensure  = 'present'
-  $server_package_manage  = true
-  $server_service_manage  = true
-  $server_service_enabled = true
-  $client_package_ensure  = 'present'
-  $client_package_manage  = true
-  $create_root_user       = true
-  $create_root_my_cnf     = true
+  $manage_config_file      = true
+  $purge_conf_dir          = false
+  $restart                 = false
+  $root_password           = 'UNSET'
+  $install_secret_file     = '/.mysql_secret'
+  $install_secret_grep     = '[^ ]\\+\$'
+  $install_secret_grep_opt = '-o'
+  $install_secret_rm       = 'rm -f'
+  $server_package_ensure   = 'present'
+  $server_package_manage   = true
+  $server_service_manage   = true
+  $server_service_enabled  = true
+  $client_package_ensure   = 'present'
+  $client_package_manage   = true
+  $create_root_user        = true
+  $create_root_my_cnf      = true
   # mysql::bindings
   $bindings_enable             = false
   $java_package_ensure         = 'present'
