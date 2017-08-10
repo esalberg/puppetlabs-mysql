@@ -11,18 +11,18 @@ class mysql::server::root_password {
   # with an expiration. No actions can be performed until this password is changed. The
   # below exec will remove this default password. If the user has supplied a root
   # password it will be set further down with the mysql_user resource.
-#  $rm_pass_mysql = "mysqladmin -u root --password=\$(grep ${secret_grep_opts} \'${secret_grep}\' ${secret_file}) password ''"
-#  $rm_pass_file = "${secret_rm} ${secret_file}"
+  $rm_pass_mysql = "mysqladmin -u root --password=\$(grep ${secret_grep_opt} \'${secret_grep}\' ${secret_file}) password ''"
+  $rm_pass_file = "${secret_rm} ${secret_file}"
 
-#  exec { 'remove install pass from mysql':
-#    command => $rm_pass_mysql,
-#    onlyif  => [ "test -f ${secret_file}", "grep ${secret_grep_opts} \'${secret_grep}\' ${secret_file" ],
-#    path    => ['/bin','/sbin','/usr/bin','/usr/sbin','/usr/local/bin','/usr/local/sbin'],
-#  }
-#  -> exec { 'remove install pass in file':
-#    command => $rm_pass_file,
-#    path    => ['/bin','/sbin','/usr/bin','/usr/sbin','/usr/local/bin','/usr/local/sbin'],
-#  }     
+  exec { 'remove install pass from mysql':
+    command => $rm_pass_mysql,
+    onlyif  => [ "test -f ${secret_file}", "grep ${secret_grep_opt} \'${secret_grep}\' ${secret_file}" ],
+    path    => ['/bin','/sbin','/usr/bin','/usr/sbin','/usr/local/bin','/usr/local/sbin'],
+  }
+  -> exec { 'remove install pass in file':
+    command => $rm_pass_file,
+    path    => ['/bin','/sbin','/usr/bin','/usr/sbin','/usr/local/bin','/usr/local/sbin'],
+  }
 
   # manage root password if it is set
   if $mysql::server::create_root_user == true and $mysql::server::root_password != 'UNSET' {
