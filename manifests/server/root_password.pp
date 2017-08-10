@@ -29,7 +29,7 @@ class mysql::server::root_password {
     mysql_user { 'root@localhost':
       ensure        => present,
       password_hash => mysql_password($mysql::server::root_password),
-      require       => Exec['remove install pass'],
+      require       => Exec['remove install pass in file'],
     }
   }
 
